@@ -8,40 +8,37 @@ import Questions from './Components/Questions'
 
 function App() {
 
-const [start, setStart] = React.useState(false)
+  const [start, setStart] = React.useState(false)
   const [questions, setQuestions] = React.useState([])
 
   function getQuestions() {
     return (
       fetch('https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple')
         .then(res => res.json())
-        .then(data => setQuestions(data)
-      )
+        .then(data => setQuestions(data.results)
+        )
     )
   }
-  console.log(questions)
 
-  // const listQuestions = questions.map(function(list){
-  //   <p>list</p>
-  // })
-
-
-  React.useEffect(function(){
+  React.useEffect(function () {
     getQuestions()
-  }, [start])
+  }, [])
 
 
   return (
-    <div className='container'>
-      <div className='info-page'>
+    <div className={start === true ? 'container small' : 'container'}>
+      {false === start && <div className='info-page'>
         <h1>Quizzical</h1>
         <p className='info'>Test your general knowledge? Let's go!</p>
-        <button className='start' 
-        onClick={function(){return(setStart(true))}}
-        getquestions = {questions}
+        <button className='start'
+          onClick={function () { return (setStart(true)) }}
         >Start Game</button>
-        {/* {listQuestions} */}
-      </div>
+      </div>}
+
+      {true === start && <div className='questions-page'>
+        <Questions quiz = {questions}/>
+      </div>}
+
     </div>
   )
 }
