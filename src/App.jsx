@@ -8,7 +8,7 @@ import Questions from './Components/Questions'
 
 function App() {
 
-  const [start, setStart] = React.useState(false)
+  const [start, setStart] = React.useState(true)
   const [questions, setQuestions] = React.useState([])
 
   function getQuestions() {
@@ -21,6 +21,7 @@ function App() {
   }
 
   React.useEffect(function () {
+    console.log('iii')
     getQuestions()
   }, [])
 
